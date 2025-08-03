@@ -2,10 +2,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ],
-  "redirects": [
-    {
-      "source": "/__/auth/**",
-      "destination": "/__/auth/**"
-    }
-  ]
+  
+
 }
