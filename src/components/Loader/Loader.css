@@ -1,0 +1,104 @@
+@import url(//fonts.googleapis.com/css?family=Vibur);
+
+.logo-loader {
+  /* width: 65%;
+  height: 250px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+   user-select: none; */
+   padding: 0px;
+   margin: 0px;
+}
+
+.logo-loader b{
+  font: 100 10vh "Vibur";
+  color: #fee;
+  
+  text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #0b467a, 0 0 0.5em #f224e1, 0 0 0.1em #e30ab4, 0 10px 3px #000;
+}
+.logo-loader b span{
+  animation: blink linear infinite 2s;
+}
+.logo-loader b span:nth-of-type(2){
+  animation: blink linear infinite 3s;
+}
+@keyframes blink {
+  78% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  79%{
+     color: #333;
+  }
+  80% {
+    
+    text-shadow: none;
+  }
+  81% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  82% {
+    color: #333;
+    text-shadow: none;
+  }
+  83% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  92% {
+    color: #333;
+    text-shadow: none;
+  }
+  92.5% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+.loader-main {
+  width: 30px;
+  aspect-ratio: 1;
+  display: grid;
+  transform: translateY(100%);
+}
+.loader-main::before,
+.loader-main::after {
+  content: "";
+  grid-area: 1/1;
+  border-radius: 50%;
+  transform-origin: bottom;
+  position: relative;
+}
+.loader-main::before {
+  background: radial-gradient(at 30% 30%,#0000,#000a) rgb(226, 8, 212);
+  transform: scaleY(0.65);
+  top: 0;
+  animation: l11-1, l11-2;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0,400,1,400),ease;
+  animation-iteration-count: infinite;
+}
+.loader-main::after {
+  background: #ccc;
+  filter: blur(8px);
+  transform: scaleY(0.3) translate(0px,0px);
+  left: 0;
+  animation: l11-3 2s cubic-bezier(0,400,1,400) infinite;
+}
+@keyframes l11-1 {
+  100% {top:-0.2px}
+}
+@keyframes l11-2 {
+  4%,96% {transform: scaleY(1)}
+}
+@keyframes l11-3 {
+  100% {transform: scaleY(0.3) translate(0.1px,-0.1px)}
+}
+
+
