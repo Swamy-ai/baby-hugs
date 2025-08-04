@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
-const Filter = ({ onFilterChange }) => {
+const Filter = ({ onFilterChange,categories }) => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
@@ -29,10 +29,11 @@ const Filter = ({ onFilterChange }) => {
             onChange={handleCategoryChange}
             className="glass-select"
           >
-            <option value=""  >All Categories</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="kids">Kids</option>
+            {categories.map((cat, idx) => (
+              <option key={idx} value={cat === "All Categories" ? "" : cat}>
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
 
@@ -55,3 +56,4 @@ const Filter = ({ onFilterChange }) => {
 };
 
 export default Filter;
+
