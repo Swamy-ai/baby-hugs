@@ -19,7 +19,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true); // 🔹 Add loading state
-
+  const [categories, setCategories] = useState(["All Categories"]);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -30,6 +30,8 @@ const Home = () => {
         }));
         setProducts(fetchedProducts);
         setFilteredProducts(fetchedProducts);
+        const uniqueCats = [...new Set(fetchedProducts.map((p) => p.category))];
+        setCategories(["All Categories", ...uniqueCats]);
       } catch (error) {
         toast.error("Error fetching products, try refresh")
         console.error('Error fetching products:', error);
@@ -77,7 +79,7 @@ const Home = () => {
       <Container className="mt-2" fluid>
         <Row>
           <Col xs={12} md={3}>
-            <Filter onFilterChange={handleFilterChange} />
+            <Filter onFilterChange={handleFilterChange} categories={categories}/>
           </Col>
           <Col xs={12} md={9} className="scrollable-products">
             <Row>
@@ -97,3 +99,4 @@ const Home = () => {
 };
 
 export default Home;
+
