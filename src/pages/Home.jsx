@@ -12,7 +12,7 @@ import WelcomeModal from '../components/WelcomeModal';
 import { toast } from "react-toastify";
 import {
   collection,
-  getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 
 const Home = () => {
@@ -21,27 +21,38 @@ const Home = () => {
   const [loading, setLoading] = useState(true); // 🔹 Add loading state
   const [categories, setCategories] = useState(["All Categories"]);
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'products'));
-        const fetchedProducts = querySnapshot.docs.map(doc => ({
+  const fetchProducts = () => {
+    const unsubscribe = onSnapshot(
+      collection(db, "products"),
+      (querySnapshot) => {
+        const fetchedProducts = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setProducts(fetchedProducts);
         setFilteredProducts(fetchedProducts);
+
         const uniqueCats = [...new Set(fetchedProducts.map((p) => p.category))];
         setCategories(["All Categories", ...uniqueCats]);
-      } catch (error) {
-        toast.error("Error fetching products, try refresh")
-        console.error('Error fetching products:', error);
-      } finally {
         setLoading(false); // 🔹 Done loading
+      },
+      (error) => {
+        toast.error("Error fetching products, try refresh");
+        console.error("Error fetching products:", error);
+        setLoading(false); // 🔹 Done loading on error
       }
-    };
+    );
 
-    fetchProducts();
-  }, []);
+    return unsubscribe;
+  };
+
+  const unsubscribe = fetchProducts();
+
+  return () => {
+    unsubscribe(); // Cleanup listener on unmount
+  };
+}, []);
+
 
   const handleFilterChange = (filter) => {
   let filtered = [...products]; // create a shallow copy
@@ -99,4 +110,5 @@ const Home = () => {
 };
 
 export default Home;
+
 
